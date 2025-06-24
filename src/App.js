@@ -24,6 +24,8 @@ function App() {
     }
   };
 
+  console.log(filters)
+
   // Загружаем и фильтруем продукты при монтировании
   useEffect(() => {
     fetchProducts();
@@ -43,7 +45,7 @@ function App() {
 
   return (
     <div className="container">
-      <Filters 
+      <Filters
         filters={filters}
         onChange={handleFilterChange}
       />
@@ -71,7 +73,7 @@ const Filters = ({ filters, onChange }) => (
         type="range"
         min={0}
         max={5}
-        step={0.1}
+        step={1}
         value={filters.minRating}
         onChange={(e) => onChange('minRating', parseFloat(e.target.value))}
       />
@@ -80,9 +82,10 @@ const Filters = ({ filters, onChange }) => (
     <div className="filter-group">
       <label>Отзывов не менее:</label>
       <input
+        min={1}
         type="number"
         value={filters.minReviews}
-        onChange={(e) => onChange('minReviews', parseInt(e.target.value))}
+        onChange={(e) => onChange('minReviews', parseInt(e.target.value === 0 || e.target.value === '' ? e.target.value = 1 : e.target.value))}
       />
     </div>
   </div>
